@@ -1,0 +1,104 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <ion-icon name="bag" color="primary"></ion-icon>
+      E-Ticaret
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="viewCart()">
+        <ion-icon name="cart"></ion-icon>
+        <ion-badge *ngIf="cartItemCount > 0" color="danger">{{ cartItemCount }}</ion-badge>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Hero Banner -->
+  <ion-card class="hero-banner">
+    <ion-img src="https://picsum.photos/800/300?random=10" alt="Banner"></ion-img>
+    <ion-card-header>
+      <ion-card-title>Yeni Sezon İndirimleri</ion-card-title>
+      <ion-card-subtitle>%50'ye varan indirimler</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+  <!-- Categories -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Kategoriler</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" *ngFor="let category of categories">
+            <ion-card class="category-card" (click)="viewCategory(category.name)">
+              <ion-card-content>
+                <ion-icon [name]="category.icon" [style.color]="category.color" size="large"></ion-icon>
+                <h3>{{ category.name }}</h3>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Featured Products -->
+  <ion-card *ngIf="featuredProducts.length > 0">
+    <ion-card-header>
+      <ion-card-title>Öne Çıkan Ürünler</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" *ngFor="let product of featuredProducts">
+            <ion-card class="product-card" (click)="viewProduct(product.id)">
+              <ion-img [src]="product.image" [alt]="product.name"></ion-img>
+              <ion-card-content>
+                <h3>{{ product.name }}</h3>
+                <p class="price">{{ formatPrice(product.price) }}</p>
+                <p class="original-price" *ngIf="product.originalPrice">{{ formatPrice(product.originalPrice) }}</p>
+                <ion-button size="small" fill="clear" (click)="addToCart(product); $event.stopPropagation()">
+                  <ion-icon name="add" slot="start"></ion-icon>
+                  Sepete Ekle
+                </ion-button>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- All Products -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Tüm Ürünler</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" *ngFor="let product of products">
+            <ion-card class="product-card" (click)="viewProduct(product.id)">
+              <ion-img [src]="product.image" [alt]="product.name"></ion-img>
+              <ion-card-content>
+                <h3>{{ product.name }}</h3>
+                <p class="price">{{ formatPrice(product.price) }}</p>
+                <p class="original-price" *ngIf="product.originalPrice">{{ formatPrice(product.originalPrice) }}</p>
+                <div class="rating">
+                  <ion-icon name="star" color="warning"></ion-icon>
+                  <span>{{ product.rating }} ({{ product.reviews }})</span>
+                </div>
+                <ion-button size="small" fill="clear" (click)="addToCart(product); $event.stopPropagation()">
+                  <ion-icon name="add" slot="start"></ion-icon>
+                  Sepete Ekle
+                </ion-button>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content> 

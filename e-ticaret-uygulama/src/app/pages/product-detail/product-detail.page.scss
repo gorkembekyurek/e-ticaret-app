@@ -1,0 +1,22 @@
+ion-img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0;
+  
+  ion-icon {
+    color: #ffc409;
+  }
+}
+
+ion-item {
+  --padding-start: 0;
+  --padding-end: 0;
+  margin: 16px 0;
+} 

@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Profil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openSettings()">
+        <ion-icon name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="profile-page" style="padding: 20px; text-align: center;">
+    <ion-icon name="person-circle" size="large" color="primary"></ion-icon>
+    <h2>Profil Sayfası</h2>
+    <p>Profil özellikleri yakında eklenecek</p>
+  </div>
+  <!-- Ayarlar Paneli -->
+  <div *ngIf="settingsOpen" class="settings-modal">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Ayarlar</ion-card-title>
+        <ion-button fill="clear" slot="end" (click)="closeSettings()" style="float:right;">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label>Dark Mode</ion-label>
+          <ion-toggle slot="end" [checked]="darkMode" (ionChange)="toggleDarkMode($event)"></ion-toggle>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content> 

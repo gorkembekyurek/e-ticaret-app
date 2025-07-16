@@ -1,0 +1,7 @@
+{
+  "name": "e-ticaret-uygulama",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

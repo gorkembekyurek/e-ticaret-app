@@ -1,0 +1,54 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Kategoriler</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item *ngFor="let category of categories" (click)="onCategoryClick(category)" button>
+      <ion-icon [name]="category.icon" [style.color]="category.color" slot="start"></ion-icon>
+      <ion-label>{{ category.name }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="selectedCategory">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ selectedCategory }} Ürünleri</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <!-- Loading State -->
+        <div *ngIf="products === null" style="text-align:center; margin-top: 16px; color: #888;">
+          <ion-spinner name="crescent"></ion-spinner>
+          <p>Ürünler yükleniyor...</p>
+        </div>
+        
+        <!-- Products Grid -->
+        <ion-grid *ngIf="products && products.length > 0">
+          <ion-row>
+            <ion-col size="6" *ngFor="let product of products; trackBy: trackByProduct; let i = index">
+              <ion-card class="product-card">
+                <ion-img [src]="product.image" [alt]="product.name"></ion-img>
+                <ion-card-content>
+                  <h3>{{ product.name }}</h3>
+                  <p class="price">{{ product.price | currency:'TRY':'symbol':'1.0-0':'tr-TR' }}</p>
+                  <p class="original-price" *ngIf="product.originalPrice">{{ product.originalPrice | currency:'TRY':'symbol':'1.0-0':'tr-TR' }}</p>
+                  <div class="rating">
+                    <ion-icon name="star" color="warning"></ion-icon>
+                    <span>{{ product.rating }} ({{ product.reviews }})</span>
+                  </div>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        
+        <!-- No Products Message -->
+        <div *ngIf="products && products.length === 0" style="text-align:center; margin-top: 16px; color: #888;">
+          Bu kategoride ürün bulunamadı.
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content> 

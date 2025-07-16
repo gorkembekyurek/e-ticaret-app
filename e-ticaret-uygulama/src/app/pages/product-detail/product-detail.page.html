@@ -1,0 +1,44 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ürün Detayı</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="product">
+  <ion-img [src]="product.image" [alt]="product.name"></ion-img>
+  
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ product.name }}</ion-card-title>
+      <ion-card-subtitle>{{ formatPrice(product.price) }}</ion-card-subtitle>
+    </ion-card-header>
+    
+    <ion-card-content>
+      <p>{{ product.description }}</p>
+      
+      <div class="rating">
+        <ion-icon name="star" color="warning"></ion-icon>
+        <span>{{ product.rating }} ({{ product.reviews }} değerlendirme)</span>
+      </div>
+      
+      <ion-item>
+        <ion-label>Adet:</ion-label>
+        <ion-button size="small" fill="clear" (click)="decreaseQuantity()">
+          <ion-icon name="remove"></ion-icon>
+        </ion-button>
+        <span>{{ quantity }}</span>
+        <ion-button size="small" fill="clear" (click)="increaseQuantity()">
+          <ion-icon name="add"></ion-icon>
+        </ion-button>
+      </ion-item>
+      
+      <ion-button expand="block" (click)="addToCart()">
+        <ion-icon name="cart" slot="start"></ion-icon>
+        Sepete Ekle
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content> 
