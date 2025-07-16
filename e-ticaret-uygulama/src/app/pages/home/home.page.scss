@@ -81,6 +81,20 @@
       font-size: 0.8rem;
     }
   }
+  
+  .product-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    
+    ion-button {
+      --padding-start: 8px;
+      --padding-end: 8px;
+      height: 32px;
+      font-size: 0.8rem;
+    }
+  }
 }
 
 ion-slides {

@@ -5,8 +5,88 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-searchbar [(ngModel)]="searchQuery" placeholder="Ürün ara..."></ion-searchbar>
-  <div style="padding: 20px; text-align: center;">
-    <p>Arama özelliği yakında eklenecek</p>
+  <!-- Arama Çubuğu -->
+  <div class="search-container">
+    <ion-searchbar 
+      [(ngModel)]="searchQuery" 
+      placeholder="Ürün ara..." 
+      (ionInput)="onSearchChange($event)"
+      (ionClear)="clearSearch()"
+      show-clear-button="focus"
+      animated="true">
+    </ion-searchbar>
+  </div>
+
+  <!-- Yükleniyor -->
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Aranıyor...</p>
+  </div>
+
+  <!-- Arama Sonuçları -->
+  <div *ngIf="!isLoading && hasSearched" class="results-container">
+    <div *ngIf="searchResults.length === 0" class="no-results">
+      <ion-icon name="search-outline" class="no-results-icon"></ion-icon>
+      <h3>Sonuç bulunamadı</h3>
+      <p>"{{ searchQuery }}" için sonuç bulunamadı. Farklı anahtar kelimeler deneyin.</p>
+    </div>
+
+    <div *ngIf="searchResults.length > 0" class="results-header">
+      <h3>{{ searchResults.length }} sonuç bulundu</h3>
+    </div>
+
+    <ion-list *ngIf="searchResults.length > 0">
+      <ion-item *ngFor="let product of searchResults" [routerLink]="['/product', product.id]" button>
+        <ion-thumbnail slot="start">
+          <ion-img [src]="product.image" [alt]="product.name"></ion-img>
+        </ion-thumbnail>
+        
+        <ion-label>
+          <h2>{{ product.name }}</h2>
+          <p class="product-description">{{ product.description }}</p>
+          
+          <div class="product-meta">
+            <div class="price-container">
+              <span class="current-price">{{ formatPrice(product.price) }}</span>
+              <span *ngIf="product.originalPrice" class="original-price">{{ formatPrice(product.originalPrice) }}</span>
+              <span *ngIf="product.discount" class="discount-badge">%{{ product.discount }} İndirim</span>
+            </div>
+            
+            <div class="rating-container">
+              <ion-icon name="star" class="star-icon"></ion-icon>
+              <span class="rating">{{ product.rating }}</span>
+              <span class="reviews">({{ product.reviews }})</span>
+            </div>
+          </div>
+        </ion-label>
+
+        <ion-icon slot="end" name="chevron-forward"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <!-- Başlangıç Durumu -->
+  <div *ngIf="!hasSearched && !isLoading" class="initial-state">
+    <ion-icon name="search-outline" class="search-icon"></ion-icon>
+    <h3>Ürün Arama</h3>
+    <p>Ürün adı, açıklama veya kategori ile arama yapabilirsiniz.</p>
+    
+    <div class="popular-searches">
+      <h4>Popüler Aramalar</h4>
+      <div class="search-tags">
+        <ion-chip (click)="searchQuery = 'iPhone'; onSearchChange({detail: {value: 'iPhone'}})">
+          <ion-label>iPhone</ion-label>
+        </ion-chip>
+        <ion-chip (click)="searchQuery = 'Samsung'; onSearchChange({detail: {value: 'Samsung'}})">
+          <ion-label>Samsung</ion-label>
+        </ion-chip>
+        <ion-chip (click)="searchQuery = 'Nike'; onSearchChange({detail: {value: 'Nike'}})">
+          <ion-label>Nike</ion-label>
+        </ion-chip>
+        <ion-chip (click)="searchQuery = 'Laptop'; onSearchChange({detail: {value: 'Laptop'}})">
+          <ion-label>Laptop</ion-label>
+        </ion-chip>
+      </div>
+    </div>
   </div>
 </ion-content> 

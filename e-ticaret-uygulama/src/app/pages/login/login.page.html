@@ -1,0 +1,131 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Giriş Yap</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="login-container">
+    <!-- Logo ve Başlık -->
+    <div class="logo-section">
+      <ion-icon name="bag-outline" class="logo-icon"></ion-icon>
+      <h1>E-Ticaret</h1>
+      <p>Hesabınıza giriş yapın</p>
+    </div>
+
+    <!-- Giriş Formu -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <!-- E-posta Alanı -->
+      <ion-item class="form-item">
+        <ion-label position="floating">
+          <ion-icon name="mail-outline"></ion-icon>
+          E-posta
+        </ion-label>
+        <ion-input 
+          type="email" 
+          formControlName="email"
+          placeholder="ornek@email.com"
+          [class.invalid]="email?.invalid && email?.touched">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="email?.invalid && email?.touched">
+        <span *ngIf="email?.errors?.['required']">E-posta adresi gereklidir</span>
+        <span *ngIf="email?.errors?.['email']">Geçerli bir e-posta adresi giriniz</span>
+      </div>
+
+      <!-- Şifre Alanı -->
+      <ion-item class="form-item">
+        <ion-label position="floating">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          Şifre
+        </ion-label>
+        <ion-input 
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          placeholder="Şifrenizi giriniz"
+          [class.invalid]="password?.invalid && password?.touched">
+        </ion-input>
+        <ion-button 
+          fill="clear" 
+          slot="end" 
+          (click)="togglePasswordVisibility()"
+          class="password-toggle">
+          <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <div class="error-message" *ngIf="password?.invalid && password?.touched">
+        <span *ngIf="password?.errors?.['required']">Şifre gereklidir</span>
+        <span *ngIf="password?.errors?.['minlength']">Şifre en az 6 karakter olmalıdır</span>
+      </div>
+
+      <!-- Şifremi Unuttum Linki -->
+      <div class="forgot-password">
+        <ion-button 
+          fill="clear" 
+          size="small" 
+          (click)="forgotPassword()"
+          class="forgot-link">
+          Şifremi unuttum
+        </ion-button>
+      </div>
+
+      <!-- Giriş Butonu -->
+      <ion-button 
+        expand="block" 
+        type="submit"
+        [disabled]="loginForm.invalid || isLoading"
+        class="login-button">
+        <ion-spinner name="crescent" *ngIf="isLoading"></ion-spinner>
+        <span *ngIf="!isLoading">Giriş Yap</span>
+      </ion-button>
+
+      <!-- Demo Bilgileri -->
+      <div class="demo-section">
+        <ion-button 
+          fill="clear" 
+          size="small" 
+          (click)="showDemoCredentials()"
+          class="demo-link">
+          Demo bilgileri göster
+        </ion-button>
+      </div>
+    </form>
+
+    <!-- Kayıt Olma Bölümü -->
+    <div class="register-section">
+      <p>Hesabınız yok mu?</p>
+      <ion-button 
+        fill="outline" 
+        expand="block"
+        (click)="goToRegister()"
+        class="register-button">
+        Yeni Hesap Oluştur
+      </ion-button>
+    </div>
+
+    <!-- Sosyal Medya Girişi (İsteğe Bağlı) -->
+    <div class="social-login">
+      <div class="divider">
+        <span>veya</span>
+      </div>
+      
+      <div class="social-buttons">
+        <ion-button 
+          fill="outline" 
+          expand="block"
+          class="google-button">
+          <ion-icon name="logo-google" slot="start"></ion-icon>
+          Google ile Giriş
+        </ion-button>
+        
+        <ion-button 
+          fill="outline" 
+          expand="block"
+          class="facebook-button">
+          <ion-icon name="logo-facebook" slot="start"></ion-icon>
+          Facebook ile Giriş
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content> 

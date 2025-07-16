@@ -10,11 +10,132 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="profile-page" style="padding: 20px; text-align: center;">
-    <ion-icon name="person-circle" size="large" color="primary"></ion-icon>
-    <h2>Profil Sayfası</h2>
-    <p>Profil özellikleri yakında eklenecek</p>
+  <div class="profile-page" *ngIf="userInfo">
+    <!-- Profil Başlığı -->
+    <div class="profile-header">
+      <ion-avatar class="profile-avatar">
+        <ion-icon name="person" size="large"></ion-icon>
+      </ion-avatar>
+      <h2>{{ userInfo.name }}</h2>
+      <p>{{ userInfo.email }}</p>
+      <ion-button fill="outline" size="small" (click)="editProfile()">
+        <ion-icon name="create-outline" slot="start"></ion-icon>
+        Profili Düzenle
+      </ion-button>
+    </div>
+
+    <!-- Profil Özellikleri -->
+    <ion-list>
+      <!-- Kişisel Bilgiler -->
+      <ion-item-divider>
+        <ion-label>Kişisel Bilgiler</ion-label>
+      </ion-item-divider>
+      
+      <ion-item button (click)="showPersonalInfo()">
+        <ion-icon name="person-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h3>Kişisel Bilgiler</h3>
+          <p>Ad, soyad, telefon</p>
+        </ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item button (click)="showAddresses()">
+        <ion-icon name="location-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h3>Adres Bilgileri</h3>
+          <p>{{ userInfo.addresses?.length || 0 }} adres kayıtlı</p>
+        </ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+
+      <!-- Siparişler -->
+      <ion-item-divider>
+        <ion-label>Siparişler</ion-label>
+      </ion-item-divider>
+
+      <ion-item button (click)="showOrders()">
+        <ion-icon name="bag-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h3>Sipariş Geçmişi</h3>
+          <p>{{ userInfo.totalOrders || 0 }} sipariş</p>
+        </ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item button (click)="showFavorites()">
+        <ion-icon name="heart-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h3>Favoriler</h3>
+          <p>{{ userInfo.favorites?.length || 0 }} ürün</p>
+        </ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+
+      <!-- Tercihler -->
+      <ion-item-divider>
+        <ion-label>Tercihler</ion-label>
+      </ion-item-divider>
+
+      <ion-item>
+        <ion-icon name="notifications-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>Bildirimler</ion-label>
+        <ion-toggle slot="end" [checked]="userInfo.notifications" (ionChange)="toggleNotifications($event)"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="moon-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>Karanlık Mod</ion-label>
+        <ion-toggle slot="end" [checked]="darkMode" (ionChange)="toggleDarkMode($event)"></ion-toggle>
+      </ion-item>
+
+      <ion-item button (click)="showLanguageSettings()">
+        <ion-icon name="language-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h3>Dil</h3>
+          <p>{{ userInfo.language || 'Türkçe' }}</p>
+        </ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+
+      <!-- Hesap -->
+      <ion-item-divider>
+        <ion-label>Hesap</ion-label>
+      </ion-item-divider>
+
+      <ion-item button (click)="showSecurity()">
+        <ion-icon name="shield-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h3>Güvenlik</h3>
+          <p>Şifre değiştir, 2FA</p>
+        </ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item button (click)="showHelp()">
+        <ion-icon name="help-circle-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h3>Yardım & Destek</h3>
+          <p>SSS, iletişim</p>
+        </ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item button (click)="logout()" color="danger">
+        <ion-icon name="log-out-outline" slot="start" color="danger"></ion-icon>
+        <ion-label>
+          <h3>Çıkış Yap</h3>
+        </ion-label>
+      </ion-item>
+    </ion-list>
   </div>
+
+  <!-- Loading veya Error State -->
+  <div *ngIf="!userInfo && isAuthenticated" class="loading-state">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Profil bilgileri yükleniyor...</p>
+  </div>
+
   <!-- Ayarlar Paneli -->
   <div *ngIf="settingsOpen" class="settings-modal">
     <ion-card>

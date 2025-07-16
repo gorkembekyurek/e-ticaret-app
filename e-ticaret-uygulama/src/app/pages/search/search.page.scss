@@ -2,4 +2,261 @@ ion-searchbar {
   margin: 16px auto;
   max-width: 400px;
   width: 100%;
+}
+
+.search-container {
+  padding: 16px;
+  background: var(--ion-color-light);
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  
+  ion-spinner {
+    margin-bottom: 16px;
+  }
+  
+  p {
+    color: var(--ion-color-medium);
+    margin: 0;
+  }
+}
+
+.results-container {
+  .results-header {
+    padding: 16px 20px 8px;
+    
+    h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ion-color-dark);
+    }
+  }
+}
+
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  
+  .no-results-icon {
+    font-size: 64px;
+    color: var(--ion-color-medium);
+    margin-bottom: 16px;
+  }
+  
+  h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ion-color-dark);
+  }
+  
+  p {
+    margin: 0;
+    color: var(--ion-color-medium);
+    line-height: 1.5;
+  }
+}
+
+ion-list {
+  ion-item {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    
+    ion-thumbnail {
+      --size: 60px;
+      margin-right: 12px;
+      
+      ion-img {
+        border-radius: 8px;
+      }
+    }
+    
+    ion-label {
+      h2 {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0 0 4px 0;
+        color: var(--ion-color-dark);
+      }
+      
+      .product-description {
+        font-size: 14px;
+        color: var(--ion-color-medium);
+        margin: 0 0 8px 0;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      
+      .product-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        
+        .price-container {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          
+          .current-price {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--ion-color-primary);
+          }
+          
+          .original-price {
+            font-size: 14px;
+            color: var(--ion-color-medium);
+            text-decoration: line-through;
+          }
+          
+          .discount-badge {
+            background: var(--ion-color-danger);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+          }
+        }
+        
+        .rating-container {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          
+          .star-icon {
+            color: #ffc409;
+            font-size: 16px;
+          }
+          
+          .rating {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ion-color-dark);
+          }
+          
+          .reviews {
+            font-size: 12px;
+            color: var(--ion-color-medium);
+          }
+        }
+      }
+    }
+  }
+}
+
+.initial-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  
+  .search-icon {
+    font-size: 80px;
+    color: var(--ion-color-primary);
+    margin-bottom: 24px;
+  }
+  
+  h3 {
+    margin: 0 0 12px 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ion-color-dark);
+  }
+  
+  p {
+    margin: 0 0 40px 0;
+    font-size: 16px;
+    color: var(--ion-color-medium);
+    line-height: 1.5;
+    max-width: 300px;
+  }
+  
+  .popular-searches {
+    width: 100%;
+    max-width: 400px;
+    
+    h4 {
+      margin: 0 0 16px 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ion-color-dark);
+    }
+    
+    .search-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      
+      ion-chip {
+        --background: var(--ion-color-light);
+        --color: var(--ion-color-dark);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        
+        &:hover {
+          --background: var(--ion-color-primary);
+          --color: white;
+        }
+      }
+    }
+  }
+}
+
+// Responsive tasarım
+@media (max-width: 576px) {
+  .search-container {
+    padding: 12px;
+  }
+  
+  ion-list ion-item {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    
+    ion-thumbnail {
+      --size: 50px;
+    }
+    
+    ion-label h2 {
+      font-size: 15px;
+    }
+    
+    ion-label .product-description {
+      font-size: 13px;
+    }
+  }
+  
+  .initial-state {
+    padding: 40px 16px;
+    
+    .search-icon {
+      font-size: 64px;
+    }
+    
+    h3 {
+      font-size: 20px;
+    }
+    
+    p {
+      font-size: 14px;
+    }
+  }
 } 

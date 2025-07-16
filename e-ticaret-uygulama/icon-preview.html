@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Ticaret Uygulama İkonu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .icon-container {
+            display: inline-block;
+            margin: 20px;
+            text-align: center;
+        }
+        .icon {
+            width: 108px;
+            height: 108px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(56, 128, 255, 0.3);
+            margin-bottom: 10px;
+        }
+        .icon-label {
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
+        }
+        .theme-colors {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .color-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .primary { background: #3880ff; }
+        .secondary1 { background: #eb445a; }
+        .secondary2 { background: #2dd36f; }
+        .secondary3 { background: #ffc409; }
+        .secondary4 { background: #92949c; }
+    </style>
+</head>
+<body>
+    <h1>E-Ticaret Uygulama İkonu</h1>
+    
+    <div class="theme-colors">
+        <div class="color-box primary">Primary<br>#3880ff</div>
+        <div class="color-box secondary1">Red<br>#eb445a</div>
+        <div class="color-box secondary2">Green<br>#2dd36f</div>
+        <div class="color-box secondary3">Yellow<br>#ffc409</div>
+        <div class="color-box secondary4">Gray<br>#92949c</div>
+    </div>
+
+    <div class="icon-container">
+        <svg class="icon" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background circle with gradient -->
+            <defs>
+                <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#3880ff;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#2d5aa0;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="bagGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#f0f8ff;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            
+            <!-- Background circle -->
+            <circle cx="54" cy="54" r="50" fill="url(#bgGradient)" stroke="#ffffff" stroke-width="2"/>
+            
+            <!-- Shopping bag -->
+            <g transform="translate(54, 54)">
+                <!-- Bag body -->
+                <path d="M-20 -15 L-15 -25 L15 -25 L20 -15 L25 -15 L25 20 L-25 20 L-25 -15 Z" 
+                      fill="url(#bagGradient)" stroke="#3880ff" stroke-width="1.5"/>
+                
+                <!-- Bag handles -->
+                <ellipse cx="-12" cy="-25" rx="8" ry="3" fill="none" stroke="#3880ff" stroke-width="2"/>
+                <ellipse cx="12" cy="-25" rx="8" ry="3" fill="none" stroke="#3880ff" stroke-width="2"/>
+                
+                <!-- Shopping cart icon inside -->
+                <g transform="translate(0, 5)">
+                    <!-- Cart base -->
+                    <rect x="-8" y="8" width="16" height="2" fill="#3880ff" rx="1"/>
+                    
+                    <!-- Cart wheels -->
+                    <circle cx="-6" cy="9" r="2" fill="#3880ff"/>
+                    <circle cx="6" cy="9" r="2" fill="#3880ff"/>
+                    
+                    <!-- Cart items -->
+                    <circle cx="-3" cy="3" r="2" fill="#ffc409"/>
+                    <circle cx="3" cy="3" r="2" fill="#2dd36f"/>
+                    <circle cx="0" cy="0" r="2" fill="#eb445a"/>
+                </g>
+            </g>
+            
+            <!-- App name "E" -->
+            <text x="54" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff">E</text>
+        </svg>
+        <div class="icon-label">Ana İkon (108x108)</div>
+    </div>
+
+    <div class="icon-container">
+        <svg class="icon" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg" style="width: 72px; height: 72px;">
+            <!-- Background circle with gradient -->
+            <defs>
+                <linearGradient id="bgGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#3880ff;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#2d5aa0;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="bagGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#f0f8ff;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            
+            <!-- Background circle -->
+            <circle cx="54" cy="54" r="50" fill="url(#bgGradient2)" stroke="#ffffff" stroke-width="2"/>
+            
+            <!-- Shopping bag -->
+            <g transform="translate(54, 54)">
+                <!-- Bag body -->
+                <path d="M-20 -15 L-15 -25 L15 -25 L20 -15 L25 -15 L25 20 L-25 20 L-25 -15 Z" 
+                      fill="url(#bagGradient2)" stroke="#3880ff" stroke-width="1.5"/>
+                
+                <!-- Bag handles -->
+                <ellipse cx="-12" cy="-25" rx="8" ry="3" fill="none" stroke="#3880ff" stroke-width="2"/>
+                <ellipse cx="12" cy="-25" rx="8" ry="3" fill="none" stroke="#3880ff" stroke-width="2"/>
+                
+                <!-- Shopping cart icon inside -->
+                <g transform="translate(0, 5)">
+                    <!-- Cart base -->
+                    <rect x="-8" y="8" width="16" height="2" fill="#3880ff" rx="1"/>
+                    
+                    <!-- Cart wheels -->
+                    <circle cx="-6" cy="9" r="2" fill="#3880ff"/>
+                    <circle cx="6" cy="9" r="2" fill="#3880ff"/>
+                    
+                    <!-- Cart items -->
+                    <circle cx="-3" cy="3" r="2" fill="#ffc409"/>
+                    <circle cx="3" cy="3" r="2" fill="#2dd36f"/>
+                    <circle cx="0" cy="0" r="2" fill="#eb445a"/>
+                </g>
+            </g>
+            
+            <!-- App name "E" -->
+            <text x="54" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff">E</text>
+        </svg>
+        <div class="icon-label">HD İkon (72x72)</div>
+    </div>
+
+    <div class="icon-container">
+        <svg class="icon" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg" style="width: 48px; height: 48px;">
+            <!-- Background circle with gradient -->
+            <defs>
+                <linearGradient id="bgGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#3880ff;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#2d5aa0;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="bagGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#f0f8ff;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            
+            <!-- Background circle -->
+            <circle cx="54" cy="54" r="50" fill="url(#bgGradient3)" stroke="#ffffff" stroke-width="2"/>
+            
+            <!-- Shopping bag -->
+            <g transform="translate(54, 54)">
+                <!-- Bag body -->
+                <path d="M-20 -15 L-15 -25 L15 -25 L20 -15 L25 -15 L25 20 L-25 20 L-25 -15 Z" 
+                      fill="url(#bagGradient3)" stroke="#3880ff" stroke-width="1.5"/>
+                
+                <!-- Bag handles -->
+                <ellipse cx="-12" cy="-25" rx="8" ry="3" fill="none" stroke="#3880ff" stroke-width="2"/>
+                <ellipse cx="12" cy="-25" rx="8" ry="3" fill="none" stroke="#3880ff" stroke-width="2"/>
+                
+                <!-- Shopping cart icon inside -->
+                <g transform="translate(0, 5)">
+                    <!-- Cart base -->
+                    <rect x="-8" y="8" width="16" height="2" fill="#3880ff" rx="1"/>
+                    
+                    <!-- Cart wheels -->
+                    <circle cx="-6" cy="9" r="2" fill="#3880ff"/>
+                    <circle cx="6" cy="9" r="2" fill="#3880ff"/>
+                    
+                    <!-- Cart items -->
+                    <circle cx="-3" cy="3" r="2" fill="#ffc409"/>
+                    <circle cx="3" cy="3" r="2" fill="#2dd36f"/>
+                    <circle cx="0" cy="0" r="2" fill="#eb445a"/>
+                </g>
+            </g>
+            
+            <!-- App name "E" -->
+            <text x="54" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff">E</text>
+        </svg>
+        <div class="icon-label">MD İkon (48x48)</div>
+    </div>
+
+    <div style="margin-top: 40px; padding: 20px; background: white; border-radius: 10px; max-width: 600px; margin-left: auto; margin-right: auto;">
+        <h3>İkon Özellikleri:</h3>
+        <ul style="text-align: left;">
+            <li><strong>Tema Rengi:</strong> #3880ff (Mavi) - Uygulamanızın primary rengi</li>
+            <li><strong>Tasarım:</strong> Alışveriş çantası + sepet içinde renkli ürünler</li>
+            <li><strong>Renkler:</strong> Mavi, kırmızı, yeşil, sarı - uygulamanızın tüm tema renkleri</li>
+            <li><strong>Modern:</strong> Gradient arka plan, yuvarlatılmış köşeler</li>
+            <li><strong>Tanınabilir:</strong> "E" harfi ile e-ticaret teması vurgulanmış</li>
+        </ul>
+        
+        <h3>Kullanım:</h3>
+        <p>Bu HTML dosyasını tarayıcıda açarak ikonu görüntüleyebilir ve ekran görüntüsü alarak PNG formatında kaydedebilirsiniz. Sonra Android Studio'da ilgili mipmap klasörlerine kopyalayabilirsiniz.</p>
+    </div>
+</body>
+</html> 

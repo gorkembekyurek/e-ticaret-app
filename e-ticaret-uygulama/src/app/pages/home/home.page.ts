@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
+import { FavoritesService } from '../../services/favorites.service';
 import { Product, Category } from '../../models/product.model';
 import { CartItem } from '../../models/cart.model';
 
@@ -14,17 +15,20 @@ import { CartItem } from '../../models/cart.model';
 export class HomePage implements OnInit {
   private productService = inject(ProductService);
   private cartService = inject(CartService);
+  private favoritesService = inject(FavoritesService);
   private router = inject(Router);
   products: Product[] = [];
   categories: Category[] = [];
   featuredProducts: Product[] = [];
   cartItemCount = 0;
+  favoritesCount = 0;
 
   ngOnInit() {
     this.loadProducts();
     this.loadCategories();
     this.loadFeaturedProducts();
     this.subscribeToCart();
+    this.subscribeToFavorites();
   }
 
   loadProducts() {
@@ -51,8 +55,26 @@ export class HomePage implements OnInit {
     });
   }
 
+  subscribeToFavorites() {
+    this.favoritesService.getFavorites().subscribe(favorites => {
+      this.favoritesCount = this.favoritesService.getFavoritesCount();
+    });
+  }
+
   addToCart(product: Product) {
     this.cartService.addToCart(product);
+  }
+
+  toggleFavorite(product: Product) {
+    if (this.favoritesService.isInFavorites(product.id)) {
+      this.favoritesService.removeFromFavorites(product.id);
+    } else {
+      this.favoritesService.addToFavorites(product);
+    }
+  }
+
+  isInFavorites(productId: number): boolean {
+    return this.favoritesService.isInFavorites(productId);
   }
 
   viewProduct(productId: number) {
@@ -63,8 +85,8 @@ export class HomePage implements OnInit {
     this.router.navigate(['/tabs/categories'], { queryParams: { category } });
   }
 
-  viewCart() {
-    this.router.navigate(['/cart']);
+  viewFavorites() {
+    this.router.navigate(['/favorites']);
   }
 
   formatPrice(price: number): string {

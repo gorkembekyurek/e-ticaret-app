@@ -1,0 +1,168 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Kayıt Ol</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="register-container">
+    <!-- Logo ve Başlık -->
+    <div class="logo-section">
+      <ion-icon name="person-add-outline" class="logo-icon"></ion-icon>
+      <h1>Hesap Oluştur</h1>
+      <p>Yeni hesabınızı oluşturun</p>
+    </div>
+
+    <!-- Kayıt Formu -->
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+      <!-- Ad Soyad Alanı -->
+      <ion-item class="form-item">
+        <ion-label position="floating">
+          <ion-icon name="person-outline"></ion-icon>
+          Ad Soyad
+        </ion-label>
+        <ion-input 
+          type="text" 
+          formControlName="name"
+          placeholder="Adınız ve soyadınız"
+          [class.invalid]="name?.invalid && name?.touched">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="name?.invalid && name?.touched">
+        <span *ngIf="name?.errors?.['required']">Ad soyad gereklidir</span>
+        <span *ngIf="name?.errors?.['minlength']">Ad soyad en az 2 karakter olmalıdır</span>
+      </div>
+
+      <!-- E-posta Alanı -->
+      <ion-item class="form-item">
+        <ion-label position="floating">
+          <ion-icon name="mail-outline"></ion-icon>
+          E-posta
+        </ion-label>
+        <ion-input 
+          type="email" 
+          formControlName="email"
+          placeholder="ornek@email.com"
+          [class.invalid]="email?.invalid && email?.touched">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="email?.invalid && email?.touched">
+        <span *ngIf="email?.errors?.['required']">E-posta adresi gereklidir</span>
+        <span *ngIf="email?.errors?.['email']">Geçerli bir e-posta adresi giriniz</span>
+      </div>
+
+      <!-- Telefon Alanı (Opsiyonel) -->
+      <ion-item class="form-item">
+        <ion-label position="floating">
+          <ion-icon name="call-outline"></ion-icon>
+          Telefon (Opsiyonel)
+        </ion-label>
+        <ion-input 
+          type="tel" 
+          formControlName="phone"
+          placeholder="+90 555 123 4567"
+          [class.invalid]="phone?.invalid && phone?.touched">
+        </ion-input>
+      </ion-item>
+      <div class="error-message" *ngIf="phone?.invalid && phone?.touched">
+        <span *ngIf="phone?.errors?.['pattern']">Geçerli bir telefon numarası giriniz</span>
+      </div>
+
+      <!-- Şifre Alanı -->
+      <ion-item class="form-item">
+        <ion-label position="floating">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          Şifre
+        </ion-label>
+        <ion-input 
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          placeholder="En az 6 karakter"
+          [class.invalid]="password?.invalid && password?.touched">
+        </ion-input>
+        <ion-button 
+          fill="clear" 
+          slot="end" 
+          (click)="togglePasswordVisibility()"
+          class="password-toggle">
+          <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <div class="error-message" *ngIf="password?.invalid && password?.touched">
+        <span *ngIf="password?.errors?.['required']">Şifre gereklidir</span>
+        <span *ngIf="password?.errors?.['minlength']">Şifre en az 6 karakter olmalıdır</span>
+      </div>
+
+      <!-- Şifre Tekrar Alanı -->
+      <ion-item class="form-item">
+        <ion-label position="floating">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          Şifre Tekrar
+        </ion-label>
+        <ion-input 
+          [type]="showConfirmPassword ? 'text' : 'password'"
+          formControlName="confirmPassword"
+          placeholder="Şifrenizi tekrar giriniz"
+          [class.invalid]="(confirmPassword?.invalid && confirmPassword?.touched) || passwordMismatch">
+        </ion-input>
+        <ion-button 
+          fill="clear" 
+          slot="end" 
+          (click)="toggleConfirmPasswordVisibility()"
+          class="password-toggle">
+          <ion-icon [name]="showConfirmPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <div class="error-message" *ngIf="(confirmPassword?.invalid && confirmPassword?.touched) || passwordMismatch">
+        <span *ngIf="confirmPassword?.errors?.['required']">Şifre tekrarı gereklidir</span>
+        <span *ngIf="passwordMismatch">Şifreler eşleşmiyor</span>
+      </div>
+
+      <!-- Kullanım Şartları -->
+      <div class="terms-section">
+        <ion-item lines="none" class="terms-item">
+          <ion-checkbox 
+            [(ngModel)]="acceptTerms"
+            [ngModelOptions]="{standalone: true}"
+            slot="start">
+          </ion-checkbox>
+          <ion-label class="terms-label">
+            <span>Kullanım şartlarını kabul ediyorum</span>
+            <ion-button 
+              fill="clear" 
+              size="small" 
+              (click)="showTerms()"
+              class="terms-link">
+              (Görüntüle)
+            </ion-button>
+          </ion-label>
+        </ion-item>
+      </div>
+
+      <!-- Kayıt Butonu -->
+      <ion-button 
+        expand="block" 
+        type="submit"
+        [disabled]="registerForm.invalid || !acceptTerms || isLoading"
+        class="register-button">
+        <ion-spinner name="crescent" *ngIf="isLoading"></ion-spinner>
+        <span *ngIf="!isLoading">Hesap Oluştur</span>
+      </ion-button>
+    </form>
+
+    <!-- Giriş Yapma Bölümü -->
+    <div class="login-section">
+      <p>Zaten hesabınız var mı?</p>
+      <ion-button 
+        fill="outline" 
+        expand="block"
+        (click)="goToLogin()"
+        class="login-button">
+        Giriş Yap
+      </ion-button>
+    </div>
+  </div>
+</ion-content> 

@@ -1,0 +1,67 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/profile"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Favorilerim</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="clearAllFavorites()" *ngIf="favorites.length > 0">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Boş durum -->
+  <div *ngIf="favorites.length === 0" class="empty-state">
+    <ion-icon name="heart-outline" size="large" color="medium"></ion-icon>
+    <h2>Henüz favori ürününüz yok</h2>
+    <p>Beğendiğiniz ürünleri favorilere ekleyerek burada görebilirsiniz.</p>
+    <ion-button fill="outline" (click)="goToHome()">
+      <ion-icon name="home" slot="start"></ion-icon>
+      Alışverişe Başla
+    </ion-button>
+  </div>
+
+  <!-- Favoriler listesi -->
+  <div *ngIf="favorites.length > 0" class="favorites-container">
+    <ion-card *ngFor="let product of favorites" class="product-card">
+      <ion-card-content>
+        <ion-item>
+          <ion-thumbnail slot="start" class="product-image">
+            <ion-img [src]="product.image" [alt]="product.name"></ion-img>
+          </ion-thumbnail>
+          <ion-label class="product-info">
+            <h2 class="product-name">{{ product.name }}</h2>
+            <p class="product-description">{{ product.description }}</p>
+            <div class="product-price">
+              <span class="current-price">{{ formatPrice(product.price) }}</span>
+              <span class="original-price" *ngIf="product.originalPrice">{{ formatPrice(product.originalPrice) }}</span>
+              <span class="discount" *ngIf="product.discount">%{{ product.discount }} İndirim</span>
+            </div>
+            <div class="product-rating">
+              <ion-icon name="star" color="warning"></ion-icon>
+              <span>{{ product.rating }} ({{ product.reviews }} değerlendirme)</span>
+            </div>
+          </ion-label>
+          <ion-button slot="end" fill="clear" color="danger" (click)="removeFromFavorites(product.id)">
+            <ion-icon name="heart"></ion-icon>
+          </ion-button>
+        </ion-item>
+        
+        <div class="product-actions">
+          <ion-button expand="block" fill="outline" (click)="viewProduct(product.id)">
+            <ion-icon name="eye" slot="start"></ion-icon>
+            Ürünü Görüntüle
+          </ion-button>
+          
+          <ion-button expand="block" (click)="addToCart(product)" [disabled]="!product.inStock">
+            <ion-icon name="cart" slot="start"></ion-icon>
+            {{ product.inStock ? 'Sepete Ekle' : 'Stokta Yok' }}
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content> 

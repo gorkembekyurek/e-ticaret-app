@@ -1,0 +1,79 @@
+const fs = require('fs');
+const path = require('path');
+
+// Icon sizes for Android
+const iconSizes = {
+  'mipmap-mdpi': 48,
+  'mipmap-hdpi': 72,
+  'mipmap-xhdpi': 96,
+  'mipmap-xxhdpi': 144,
+  'mipmap-xxxhdpi': 192
+};
+
+// SVG content with the e-commerce icon design
+const svgContent = `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="108" height="108" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle with gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3880ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d5aa0;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="bagGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f0f8ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="54" cy="54" r="50" fill="url(#bgGradient)" stroke="#ffffff" stroke-width="2"/>
+  
+  <!-- Shopping bag -->
+  <g transform="translate(54, 54)">
+    <!-- Bag body -->
+    <path d="M-20 -15 L-15 -25 L15 -25 L20 -15 L25 -15 L25 20 L-25 20 L-25 -15 Z" 
+          fill="url(#bagGradient)" stroke="#3880ff" stroke-width="1.5"/>
+    
+    <!-- Bag handles -->
+    <ellipse cx="-12" cy="-25" rx="8" ry="3" fill="none" stroke="#3880ff" stroke-width="2"/>
+    <ellipse cx="12" cy="-25" rx="8" ry="3" fill="none" stroke="#3880ff" stroke-width="2"/>
+    
+    <!-- Shopping cart icon inside -->
+    <g transform="translate(0, 5)">
+      <!-- Cart base -->
+      <rect x="-8" y="8" width="16" height="2" fill="#3880ff" rx="1"/>
+      
+      <!-- Cart wheels -->
+      <circle cx="-6" cy="9" r="2" fill="#3880ff"/>
+      <circle cx="6" cy="9" r="2" fill="#3880ff"/>
+      
+      <!-- Cart items -->
+      <circle cx="-3" cy="3" r="2" fill="#ffc409"/>
+      <circle cx="3" cy="3" r="2" fill="#2dd36f"/>
+      <circle cx="0" cy="0" r="2" fill="#eb445a"/>
+    </g>
+  </g>
+  
+  <!-- App name "E" -->
+  <text x="54" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff">E</text>
+</svg>`;
+
+console.log('E-ticaret uygulaması için modern ikon oluşturuluyor...');
+console.log('Tema renkleri:');
+console.log('- Primary: #3880ff (Mavi)');
+console.log('- Secondary: #eb445a (Kırmızı), #2dd36f (Yeşil), #ffc409 (Sarı)');
+
+// Save SVG file
+const svgPath = path.join(__dirname, 'app-icon.svg');
+fs.writeFileSync(svgPath, svgContent);
+console.log(`SVG ikon kaydedildi: ${svgPath}`);
+
+console.log('\nPNG ikonları oluşturmak için:');
+console.log('1. Online SVG to PNG converter kullanın (örn: https://convertio.co/svg-png/)');
+console.log('2. Veya ImageMagick ile: convert app-icon.svg -resize 48x48 ic_launcher.png');
+console.log('\nOluşturulacak boyutlar:');
+Object.entries(iconSizes).forEach(([folder, size]) => {
+  console.log(`- ${folder}: ${size}x${size}px`);
+});
+
+console.log('\nİkonlar hazır olduğunda android/app/src/main/res/ klasöründeki ilgili mipmap klasörlerine kopyalayın.'); 

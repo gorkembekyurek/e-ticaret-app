@@ -1,0 +1,171 @@
+.register-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logo-section {
+  text-align: center;
+  margin-bottom: 30px;
+
+  .logo-icon {
+    font-size: 50px;
+    color: var(--ion-color-primary);
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    color: var(--ion-color-dark);
+  }
+
+  p {
+    font-size: 14px;
+    color: var(--ion-color-medium);
+    margin: 0;
+  }
+}
+
+.register-form {
+  margin-bottom: 30px;
+
+  .form-item {
+    --background: transparent;
+    --border-color: var(--ion-color-light);
+    --border-radius: 12px;
+    --border-width: 1px;
+    --border-style: solid;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    overflow: hidden;
+
+    ion-label {
+      font-weight: 500;
+      color: var(--ion-color-dark);
+
+      ion-icon {
+        margin-right: 8px;
+        color: var(--ion-color-primary);
+      }
+    }
+
+    ion-input {
+      --padding-start: 16px;
+      --padding-end: 16px;
+      --padding-top: 16px;
+      --padding-bottom: 16px;
+      font-size: 16px;
+
+      &.invalid {
+        --border-color: var(--ion-color-danger);
+      }
+    }
+
+    .password-toggle {
+      --color: var(--ion-color-medium);
+      margin-right: 8px;
+    }
+  }
+
+  .error-message {
+    color: var(--ion-color-danger);
+    font-size: 12px;
+    margin: -8px 0 8px 16px;
+  }
+
+  .terms-section {
+    margin: 20px 0;
+
+    .terms-item {
+      --background: transparent;
+      --border: none;
+      --padding-start: 0;
+      --padding-end: 0;
+
+      ion-checkbox {
+        --size: 20px;
+        --checkbox-background-checked: var(--ion-color-primary);
+        --border-color-checked: var(--ion-color-primary);
+        margin-right: 12px;
+      }
+
+      .terms-label {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        color: var(--ion-color-dark);
+
+        span {
+          margin-right: 8px;
+        }
+
+        .terms-link {
+          --color: var(--ion-color-primary);
+          --padding-start: 0;
+          --padding-end: 0;
+          font-size: 12px;
+          font-weight: 500;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .register-button {
+    --border-radius: 12px;
+    --padding-top: 16px;
+    --padding-bottom: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    height: 52px;
+
+    &:disabled {
+      --opacity: 0.6;
+    }
+  }
+}
+
+.login-section {
+  text-align: center;
+  margin-bottom: 30px;
+
+  p {
+    color: var(--ion-color-medium);
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+
+  .login-button {
+    --border-radius: 12px;
+    --padding-top: 16px;
+    --padding-bottom: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    height: 52px;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-container {
+    padding: 16px;
+  }
+
+  .logo-section {
+    margin-bottom: 25px;
+
+    .logo-icon {
+      font-size: 45px;
+    }
+
+    h1 {
+      font-size: 22px;
+    }
+  }
+} 

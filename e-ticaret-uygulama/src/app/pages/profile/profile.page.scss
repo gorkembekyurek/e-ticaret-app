@@ -11,20 +11,116 @@ p {
   color: #666;
 }
 
+.profile-page {
+  padding: 0;
+}
+
+.profile-header {
+  background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-primary-shade));
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 16px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-avatar ion-icon {
+  font-size: 40px;
+  color: white;
+}
+
+.profile-header h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.profile-header p {
+  margin: 0 0 16px 0;
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+
+ion-list {
+  margin: 0;
+  padding: 0;
+}
+
+ion-item-divider {
+  --background: var(--ion-color-light);
+  --color: var(--ion-color-dark);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+ion-item {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --min-height: 60px;
+}
+
+ion-item h3 {
+  font-weight: 500;
+  margin: 0;
+  font-size: 1rem;
+}
+
+ion-item p {
+  margin: 4px 0 0 0;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+ion-item ion-icon[slot="start"] {
+  margin-right: 12px;
+  font-size: 20px;
+}
+
+ion-item ion-icon[slot="end"] {
+  color: var(--ion-color-medium);
+}
+
+ion-toggle {
+  --handle-width: 20px;
+  --handle-height: 20px;
+}
+
+// Dark mode styles
 body.dark ion-content {
   background: #181818 !important;
 }
 
-body.dark .profile-page h2 {
-  color: #fafafa;
+body.dark .profile-header {
+  background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
 }
 
-body.dark .profile-page p {
-  color: #cccccc;
+body.dark ion-item-divider {
+  --background: #2c2c2c;
+  --color: #fafafa;
 }
 
-body.dark .profile-page ion-icon {
-  color: #fafafa !important;
+body.dark ion-item {
+  --background: #2c2c2c;
+  --color: #fafafa;
+}
+
+body.dark ion-item p {
+  opacity: 0.6;
+}
+
+body.dark ion-item ion-icon[slot="end"] {
+  color: #888;
 }
 
 .settings-modal {
@@ -35,4 +131,24 @@ body.dark .profile-page ion-icon {
   z-index: 1000;
   width: 90%;
   max-width: 400px;
+}
+
+// Responsive design
+@media (max-width: 576px) {
+  .profile-header {
+    padding: 20px 16px;
+  }
+  
+  .profile-avatar {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .profile-avatar ion-icon {
+    font-size: 30px;
+  }
+  
+  .profile-header h2 {
+    font-size: 1.3rem;
+  }
 } 

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Shopping bag -->
+    <group android:translateX="54" android:translateY="54">
+        <!-- Bag body -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:strokeColor="#3880ff"
+            android:strokeWidth="1.5"
+            android:pathData="M-20,-15 L-15,-25 L15,-25 L20,-15 L25,-15 L25,20 L-25,20 L-25,-15 Z"/>
+        
+        <!-- Bag handles -->
+        <path
+            android:fillColor="#00000000"
+            android:strokeColor="#3880ff"
+            android:strokeWidth="2"
+            android:pathData="M-20,-25 A8,3 0 1,1 -4,-25"/>
+        <path
+            android:fillColor="#00000000"
+            android:strokeColor="#3880ff"
+            android:strokeWidth="2"
+            android:pathData="M4,-25 A8,3 0 1,1 20,-25"/>
+        
+        <!-- Shopping cart icon inside -->
+        <group android:translateX="0" android:translateY="5">
+            <!-- Cart base -->
+            <path
+                android:fillColor="#3880ff"
+                android:pathData="M-8,8 L8,8 L8,10 L-8,10 Z"/>
+            
+            <!-- Cart wheels -->
+            <path
+                android:fillColor="#3880ff"
+                android:pathData="M-8,7 A2,2 0 1,1 -4,7 A2,2 0 1,1 -8,7"/>
+            <path
+                android:fillColor="#3880ff"
+                android:pathData="M4,7 A2,2 0 1,1 8,7 A2,2 0 1,1 4,7"/>
+            
+            <!-- Cart items -->
+            <path
+                android:fillColor="#ffc409"
+                android:pathData="M-5,1 A2,2 0 1,1 -1,1 A2,2 0 1,1 -5,1"/>
+            <path
+                android:fillColor="#2dd36f"
+                android:pathData="M1,1 A2,2 0 1,1 5,1 A2,2 0 1,1 1,1"/>
+            <path
+                android:fillColor="#eb445a"
+                android:pathData="M-2,-2 A2,2 0 1,1 2,-2 A2,2 0 1,1 -2,-2"/>
+        </group>
+    </group>
+    
+    <!-- App name "E" -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M50,85 L58,85 L58,87 L50,87 Z M50,80 L58,80 L58,82 L50,82 Z M50,75 L58,75 L58,77 L50,77 Z M50,70 L58,70 L58,72 L50,72 Z"/>
+</vector> 

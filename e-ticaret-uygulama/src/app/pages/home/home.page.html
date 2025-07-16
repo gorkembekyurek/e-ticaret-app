@@ -5,9 +5,8 @@
       E-Ticaret
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="viewCart()">
-        <ion-icon name="cart"></ion-icon>
-        <ion-badge *ngIf="cartItemCount > 0" color="danger">{{ cartItemCount }}</ion-badge>
+      <ion-button (click)="viewFavorites()">
+        <ion-icon name="heart"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -59,10 +58,16 @@
                 <h3>{{ product.name }}</h3>
                 <p class="price">{{ formatPrice(product.price) }}</p>
                 <p class="original-price" *ngIf="product.originalPrice">{{ formatPrice(product.originalPrice) }}</p>
-                <ion-button size="small" fill="clear" (click)="addToCart(product); $event.stopPropagation()">
-                  <ion-icon name="add" slot="start"></ion-icon>
-                  Sepete Ekle
-                </ion-button>
+                <div class="product-actions">
+                  <ion-button size="small" fill="clear" (click)="addToCart(product); $event.stopPropagation()">
+                    <ion-icon name="add" slot="start"></ion-icon>
+                    Sepete Ekle
+                  </ion-button>
+                  <ion-button size="small" fill="clear" (click)="toggleFavorite(product); $event.stopPropagation()">
+                    <ion-icon [name]="isInFavorites(product.id) ? 'heart' : 'heart-outline'" 
+                             [color]="isInFavorites(product.id) ? 'danger' : 'medium'"></ion-icon>
+                  </ion-button>
+                </div>
               </ion-card-content>
             </ion-card>
           </ion-col>
@@ -90,10 +95,16 @@
                   <ion-icon name="star" color="warning"></ion-icon>
                   <span>{{ product.rating }} ({{ product.reviews }})</span>
                 </div>
-                <ion-button size="small" fill="clear" (click)="addToCart(product); $event.stopPropagation()">
-                  <ion-icon name="add" slot="start"></ion-icon>
-                  Sepete Ekle
-                </ion-button>
+                <div class="product-actions">
+                  <ion-button size="small" fill="clear" (click)="addToCart(product); $event.stopPropagation()">
+                    <ion-icon name="add" slot="start"></ion-icon>
+                    Sepete Ekle
+                  </ion-button>
+                  <ion-button size="small" fill="clear" (click)="toggleFavorite(product); $event.stopPropagation()">
+                    <ion-icon [name]="isInFavorites(product.id) ? 'heart' : 'heart-outline'" 
+                             [color]="isInFavorites(product.id) ? 'danger' : 'medium'"></ion-icon>
+                  </ion-button>
+                </div>
               </ion-card-content>
             </ion-card>
           </ion-col>
