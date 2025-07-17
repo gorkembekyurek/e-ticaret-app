@@ -58,6 +58,12 @@
         <span *ngIf="password?.errors?.['minlength']">Şifre en az 6 karakter olmalıdır</span>
       </div>
 
+      <!-- Beni Hatırla Checkbox -->
+      <ion-item lines="none" class="form-item">
+        <ion-checkbox slot="start" formControlName="rememberMe"></ion-checkbox>
+        <ion-label>Beni Hatırla</ion-label>
+      </ion-item>
+
       <!-- Şifremi Unuttum Linki -->
       <div class="forgot-password">
         <ion-button 

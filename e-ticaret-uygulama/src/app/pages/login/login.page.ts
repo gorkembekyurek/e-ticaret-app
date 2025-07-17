@@ -25,15 +25,13 @@ export class LoginPage implements OnInit {
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      rememberMe: [false]
     });
   }
 
   ngOnInit() {
-    // Eğer kullanıcı zaten giriş yapmışsa ana sayfaya yönlendir
-    if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/tabs/home']);
-    }
+    // Otomatik yönlendirme kaldırıldı. Sadece login sonrası yönlendirme yapılacak.
   }
 
   async onSubmit() {
@@ -46,11 +44,13 @@ export class LoginPage implements OnInit {
       await loading.present();
 
       try {
-        const result = await this.authService.login(this.loginForm.value);
-        
+        const { email, password, rememberMe } = this.loginForm.value;
+        const result = await this.authService.login({ email, password, rememberMe });
         if (result.success) {
           await this.showToast(result.message, 'success');
-          this.router.navigate(['/tabs/home']);
+          setTimeout(() => {
+            this.router.navigate(['/tabs/home']);
+          }, 0);
         } else {
           await this.showToast(result.message, 'danger');
         }

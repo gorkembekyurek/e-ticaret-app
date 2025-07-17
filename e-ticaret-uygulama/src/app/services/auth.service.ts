@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 import { Storage } from '@ionic/storage-angular';
+import { HttpClient } from '@angular/common/http';
 
 export interface User {
   id: number;
@@ -18,6 +19,7 @@ export interface User {
 export interface LoginCredentials {
   email: string;
   password: string;
+  rememberMe?: boolean;
 }
 
 export interface RegisterCredentials {
@@ -37,7 +39,7 @@ export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private storage: Storage) {
+  constructor(private storage: Storage, private http: HttpClient) {
     this.initStorage();
   }
 
@@ -47,9 +49,17 @@ export class AuthService {
   }
 
   private async checkAuthStatus() {
+    // Önce sessionStorage kontrol et
+    const sessionToken = sessionStorage.getItem('authToken');
+    const sessionUser = sessionStorage.getItem('currentUser');
+    if (sessionToken && sessionUser) {
+      this.currentUserSubject.next(JSON.parse(sessionUser));
+      this.isAuthenticatedSubject.next(true);
+      return;
+    }
+    // Sonra kalıcı storage kontrol et
     const token = await this.storage.get('authToken');
     const user = await this.storage.get('currentUser');
-    
     if (token && user) {
       this.currentUserSubject.next(user);
       this.isAuthenticatedSubject.next(true);
@@ -57,84 +67,63 @@ export class AuthService {
   }
 
   async login(credentials: LoginCredentials): Promise<{ success: boolean; message: string; user?: User }> {
-    // Simüle edilmiş API çağrısı
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        // Demo kullanıcı kontrolü
-        if (credentials.email === 'demo@example.com' && credentials.password === '123456') {
-          const user: User = {
-            id: 1,
-            name: 'Demo Kullanıcı',
-            email: credentials.email,
-            phone: '+90 555 123 4567',
-            addresses: [
-              { id: 1, title: 'Ev', address: 'Örnek Mahallesi, Örnek Sokak No:1, İstanbul' },
-              { id: 2, title: 'İş', address: 'İş Mahallesi, İş Sokak No:5, Ankara' }
-            ],
-            totalOrders: 12,
-            notifications: true,
-            language: 'Türkçe'
-          };
-
-          this.setAuthData(user, 'demo-token-123');
-          resolve({ success: true, message: 'Giriş başarılı', user });
-        } else {
-          resolve({ success: false, message: 'E-posta veya şifre hatalı' });
-        }
-      }, 1000);
-    });
+    const API_URL = 'http://10.0.2.2:3001/api';
+    // Backend API'ye istek at
+    try {
+      const response: any = await this.http.post(`${API_URL}/login`, credentials).toPromise();
+      if (response.success && response.user) {
+        await this.setAuthData(response.user, 'dummy-token', credentials.rememberMe);
+        return { success: true, message: response.message, user: response.user };
+      } else {
+        return { success: false, message: response.message };
+      }
+    } catch (err: any) {
+      return { success: false, message: err?.error?.message || 'Giriş sırasında hata oluştu.' };
+    }
   }
 
   async register(credentials: RegisterCredentials): Promise<{ success: boolean; message: string; user?: User }> {
-    // Simüle edilmiş API çağrısı
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        // Şifre kontrolü
-        if (credentials.password !== credentials.confirmPassword) {
-          resolve({ success: false, message: 'Şifreler eşleşmiyor' });
-          return;
-        }
-
-        // E-posta format kontrolü
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(credentials.email)) {
-          resolve({ success: false, message: 'Geçerli bir e-posta adresi giriniz' });
-          return;
-        }
-
-        // Şifre güvenlik kontrolü
-        if (credentials.password.length < 6) {
-          resolve({ success: false, message: 'Şifre en az 6 karakter olmalıdır' });
-          return;
-        }
-
-        const user: User = {
-          id: Date.now(), // Basit ID oluşturma
-          name: credentials.name,
-          email: credentials.email,
-          phone: credentials.phone,
-          addresses: [],
-          totalOrders: 0,
-          notifications: true,
-          language: 'Türkçe'
-        };
-
-        this.setAuthData(user, 'new-user-token-' + Date.now());
-        resolve({ success: true, message: 'Kayıt başarılı', user });
-      }, 1000);
-    });
+    const API_URL = 'http://10.0.2.2:3001/api';
+    // Sadece backend'in beklediği alanları gönder
+    const payload = {
+      name: credentials.name,
+      email: credentials.email,
+      password: credentials.password,
+      phone: credentials.phone
+    };
+    try {
+      const response: any = await this.http.post(`${API_URL}/register`, payload).toPromise();
+      if (response.success && response.user) {
+        await this.setAuthData(response.user, 'dummy-token', false);
+        return { success: true, message: response.message, user: response.user };
+      } else {
+        return { success: false, message: response.message };
+      }
+    } catch (err: any) {
+      return { success: false, message: err?.error?.message || 'Kayıt sırasında hata oluştu.' };
+    }
   }
 
   async logout(): Promise<void> {
     await this.storage.remove('authToken');
     await this.storage.remove('currentUser');
+    sessionStorage.removeItem('authToken');
+    sessionStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
     this.isAuthenticatedSubject.next(false);
   }
 
-  private async setAuthData(user: User, token: string) {
-    await this.storage.set('authToken', token);
-    await this.storage.set('currentUser', user);
+  private async setAuthData(user: User, token: string, rememberMe?: boolean) {
+    if (rememberMe) {
+      await this.storage.set('authToken', token);
+      await this.storage.set('currentUser', user);
+    } else {
+      sessionStorage.setItem('authToken', token);
+      sessionStorage.setItem('currentUser', JSON.stringify(user));
+      // Storage'dan sil (önceki oturumdan kalma olabilir)
+      await this.storage.remove('authToken');
+      await this.storage.remove('currentUser');
+    }
     this.currentUserSubject.next(user);
     this.isAuthenticatedSubject.next(true);
   }
@@ -144,7 +133,19 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return this.isAuthenticatedSubject.value;
+    // Önce BehaviorSubject kontrolü
+    if (this.isAuthenticatedSubject.value) {
+      return true;
+    }
+    // Sonra sessionStorage kontrolü
+    const sessionToken = sessionStorage.getItem('authToken');
+    const sessionUser = sessionStorage.getItem('currentUser');
+    if (sessionToken && sessionUser) {
+      return true;
+    }
+    // Son olarak storage kontrolü (sadece sync değil, async olduğu için burada await kullanılamaz)
+    // Bu yüzden burada sadece hızlıca false döneriz, checkAuthStatus zaten async olarak state'i güncelliyor.
+    return false;
   }
 
   async updateUser(userData: Partial<User>): Promise<void> {

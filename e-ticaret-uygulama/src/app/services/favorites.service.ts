@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Product } from '../models/product.model';
 import { ProductService } from './product.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,13 @@ export class FavoritesService {
   private favoritesSubject = new BehaviorSubject<Product[]>([]);
   private favorites: Product[] = [];
 
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService, private authService: AuthService) {
     this.loadFavoritesFromStorage();
     this.initializeSampleFavorites();
   }
 
   getFavorites(): Observable<Product[]> {
+    this.loadFavoritesFromStorage(); // Kullanıcı değişirse güncel favoriler gelsin
     return this.favoritesSubject.asObservable();
   }
 
@@ -36,6 +38,7 @@ export class FavoritesService {
   }
 
   getFavoritesCount(): number {
+    this.loadFavoritesFromStorage();
     return this.favorites.length;
   }
 
@@ -44,23 +47,32 @@ export class FavoritesService {
     this.saveFavoritesToStorage();
   }
 
+  private getStorageKey(): string {
+    const user = this.authService.getCurrentUser();
+    if (user && user.email) {
+      return `favorites_${user.email}`;
+    }
+    return 'favorites_guest';
+  }
+
   private saveFavoritesToStorage(): void {
-    localStorage.setItem('favorites', JSON.stringify(this.favorites));
+    localStorage.setItem(this.getStorageKey(), JSON.stringify(this.favorites));
   }
 
   private loadFavoritesFromStorage(): void {
-    const stored = localStorage.getItem('favorites');
+    const stored = localStorage.getItem(this.getStorageKey());
     if (stored) {
       this.favorites = JSON.parse(stored);
       this.favoritesSubject.next([...this.favorites]);
+    } else {
+      this.favorites = [];
+      this.favoritesSubject.next([]);
     }
   }
 
   private initializeSampleFavorites(): void {
-    // Eğer localStorage'da favori yoksa, örnek ürünler ekle
     if (this.favorites.length === 0) {
       this.productService.getProducts().subscribe(products => {
-        // İlk 3 ürünü favorilere ekle
         const sampleProducts = products.slice(0, 3);
         this.favorites = sampleProducts;
         this.updateFavorites();
