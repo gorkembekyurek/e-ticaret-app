@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 import { Storage } from '@ionic/storage-angular';
 import { HttpClient } from '@angular/common/http';
+import { Capacitor } from '@capacitor/core';
 
 export interface User {
   id: number;
@@ -39,6 +40,17 @@ export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
+  // API URL'yi ortama göre ayarla
+  private getApiUrl(): string {
+    if (Capacitor.isNativePlatform()) {
+      // Android/iOS için
+      return 'http://10.0.2.2:3001/api';
+    } else {
+      // Tarayıcı için
+      return 'http://localhost:3001/api';
+    }
+  }
+
   constructor(private storage: Storage, private http: HttpClient) {
     this.initStorage();
   }
@@ -67,10 +79,8 @@ export class AuthService {
   }
 
   async login(credentials: LoginCredentials): Promise<{ success: boolean; message: string; user?: User }> {
-    const API_URL = 'http://10.0.2.2:3001/api';
-    // Backend API'ye istek at
     try {
-      const response: any = await this.http.post(`${API_URL}/login`, credentials).toPromise();
+      const response: any = await this.http.post(`${this.getApiUrl()}/login`, credentials).toPromise();
       if (response.success && response.user) {
         await this.setAuthData(response.user, 'dummy-token', credentials.rememberMe);
         return { success: true, message: response.message, user: response.user };
@@ -83,8 +93,6 @@ export class AuthService {
   }
 
   async register(credentials: RegisterCredentials): Promise<{ success: boolean; message: string; user?: User }> {
-    const API_URL = 'http://10.0.2.2:3001/api';
-    // Sadece backend'in beklediği alanları gönder
     const payload = {
       name: credentials.name,
       email: credentials.email,
@@ -92,7 +100,7 @@ export class AuthService {
       phone: credentials.phone
     };
     try {
-      const response: any = await this.http.post(`${API_URL}/register`, payload).toPromise();
+      const response: any = await this.http.post(`${this.getApiUrl()}/register`, payload).toPromise();
       if (response.success && response.user) {
         await this.setAuthData(response.user, 'dummy-token', false);
         return { success: true, message: response.message, user: response.user };

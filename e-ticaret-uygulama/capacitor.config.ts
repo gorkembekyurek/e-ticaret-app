@@ -5,7 +5,12 @@ const config: CapacitorConfig = {
   appName: 'e-ticaret-uygulama',
   webDir: 'www',
   server: {
-    cleartext: true
+    cleartext: true,
+    allowNavigation: ['*'],
+    androidScheme: 'http'
+  },
+  android: {
+    webContentsDebuggingEnabled: true
   }
 };
 

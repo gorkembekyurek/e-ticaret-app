@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage-angular';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import localeTr from '@angular/common/locales/tr';
 import { LoginPage } from './pages/login/login.page';
@@ -31,7 +31,8 @@ registerLocaleData(localeTr, 'tr-TR');
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: LOCALE_ID, useValue: 'tr-TR' }
+    { provide: LOCALE_ID, useValue: 'tr-TR' },
+    provideHttpClient(withFetch())
   ],
   bootstrap: [AppComponent],
 })
